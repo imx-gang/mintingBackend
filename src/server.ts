@@ -3,21 +3,9 @@ import http from 'http';
 import mongoose from 'mongoose';
 import { config } from './config/config';
 import Logging from './library/Logging';
-// import authorRoutes from './routes/Author';
-// import bookRoutes from './routes/Book';
+import nftRoutes from './routes/nft';
 
 const router = express();
-
-/** Connect to Mongo */
-// import { MongoClient, ServerApiVersion } from 'mongodb';
-// const client = new MongoClient(config.mongo.url, { serverApi: ServerApiVersion.v1 });
-// client.connect((err) => {
-//     const collection = client.db('test').collection('devices');
-//     // perform actions on the collection object
-//     Logging.info('Mongo connected successfully.');
-//     StartServer();
-//     client.close();
-// });
 
 mongoose
     .connect(config.mongo.url, { retryWrites: true, w: 'majority' })
@@ -59,8 +47,7 @@ const StartServer = () => {
     });
 
     /** Routes */
-    // router.use('/authors', authorRoutes);
-    // router.use('/books', bookRoutes);
+    router.use('/nft', nftRoutes);
 
     /** Healthcheck */
     router.get('/ping', (req, res, next) => res.status(200).json({ hello: 'world' }));
